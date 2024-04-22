@@ -1,56 +1,63 @@
-from dash import Dash, html, dcc, Input, Output, callback
+import dash
+from dash import Dash, html, dcc, Input, Output
+import dash_bootstrap_components as dbc
 import plotly.express as px
 import pandas as pd
 
-app = Dash(__name__)
-
-# assume you have a "long-form" data frame
-# see https://plotly.com/python/px-arguments/ for more options
-dfdengue = pd.read_csv("dengue_1-14.csv")
-dfcasos = pd.DataFrame()
-sem = []
-cont = len(dfdengue)
-for c in range(0, 13):
-    sem += cont,
-    cont -= 1
-dfcasos ['Semanas'] = sem
-dfcasos ['Casos'] = dfdengue['casos']
-dfcasos ['Temperatura'] = dfdengue['tempmed']
-dfcasos ['Umidade']= dfdengue['umidmed']
-dfcasos = dfcasos.sort_index(ascending=False)
+app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 
-opcoes = list(dfcasos['Semanas'])
-opcoes.append("Todas as semanas")
+app.layout = dbc.Container(
+    [
+        dcc.Store(id="store"),
+        html.H1(children='Monitora Dengue Guararema'),
+        html.Hr(),
+        html.H2(children='Informações sobre casos de Dengue em Guararema'),
+        html.Hr(),
+               dbc.Tabs(
+            [
+                dbc.Tab(label="Casos de Dengue", tab_id="casos"),
+                dbc.Tab(label="Clima", tab_id="clima"),
+            ],
+            id="tabs",
+            active_tab="casos",
+        ),
+        html.Div(id="tab-content", className="p-4"),
+    ]
+)
 
-fig_cas = px.line(dfcasos, x='Semanas', y="Casos", markers=True, title='Casos de Dengue')
-fig_temp = px.line(dfcasos, x='Semanas', y="Temperatura", markers=True, title='Temperatura')
-fig_umid = px.line(dfcasos, x='Semanas', y="Umidade", markers=True, title='Umidade')
-
-
-app.layout = html.Div(children=[
-    html.H1(children='Monitora Dengue Guararema'),
-    html.H2(children='Informações sobre casos de Dengue em Guararema'),
-
-    html.Div(children='''
-        Obs. Esse gráfico mostra o número de casos de dengue por semana em 2024.
-    '''),
-
-    dcc.Dropdown(opcoes, value='Todas as semanas', id='lista-semanas'),
+@app.callback(
+    Output("tab-content", "children"),
+    [Input("tabs", "active_tab"), Input("store", "data")],
+)
+def render_tab_content(active_tab, data):
     
-    dcc.Graph(
-        id='grafico_casos',
-        figure=fig_cas
-    ),
-    dcc.Graph(
-        id='grafico_temp',
-        figure=fig_temp
-    ),
-    dcc.Graph(
-        id='grafico_umid',
-        figure=fig_umid
-    )
-])
+    #Carregando os dados e gerando o data frame 
+    dfdengue = pd.read_csv("dengue_1-14.csv")
+    dfcasos = pd.DataFrame()
+    dfcasos ['Data'] = dfdengue['data_iniSE']
+    dfcasos ['Casos'] = dfdengue['casos']
+    dfcasos ['Temperatura'] = dfdengue['tempmed']
+    dfcasos ['Umidade']= dfdengue['umidmed']
+    dfcasos = dfcasos.sort_index(ascending=False)
+
+
+    # Gerando os graficos a serem exibidos
+    
+    fig_cas = px.line(dfcasos, x='Data', y="Casos", markers=True)
+    fig_temp = px.line(dfcasos, x='Data', y="Temperatura", markers=True, title='Temperatura')
+    fig_umid = px.line(dfcasos, x='Data', y="Umidade", markers=True, title='Umidade')
+
+    # Definindo abas ativas
+    if active_tab == "casos":
+        return dcc.Graph(figure=fig_cas)
+    elif active_tab == "clima":
+        return dbc.Row(
+            [
+                dbc.Col(dcc.Graph(figure=fig_temp)),
+                dbc.Col(dcc.Graph(figure= fig_umid)),
+            ]
+        )
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run_server(debug=True, port=8888)

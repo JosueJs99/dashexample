@@ -12,4 +12,8 @@ pip install dash
 
 pip install pandas
 
+#Instalar o bootstrap components
+
+pip install dash-bootstrap-components
+
 Para Iniciar a aplicação basta rodar o App.py e acessar a URL que aparece no terminal
