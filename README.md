@@ -16,4 +16,17 @@ pip install pandas
 
 pip install dash-bootstrap-components
 
+#Instalar o shapely
+
+pip install shapely
+
+#Instalar o plotly
+
+pip install plotly
+
+#Instalar o geoapandas
+
+pip install geopandas
+
+
 Para Iniciar a aplicação basta rodar o App.py e acessar a URL que aparece no terminal
