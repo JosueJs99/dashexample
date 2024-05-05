@@ -28,5 +28,9 @@ pip install plotly
 
 pip install geopandas
 
+#Dash Player
+
+pip install dash-player
+
 
 Para Iniciar a aplicação basta rodar o App.py e acessar a URL que aparece no terminal

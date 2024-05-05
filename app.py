@@ -98,28 +98,189 @@ showline=True, linewidth=1, linecolor='black')
 fig_dvsu.update_yaxes(showgrid=True, gridwidth=1, gridcolor='lightgray',
 showline=True, linewidth=1, linecolor='black')
 
+# Material educativo
+
+video_dengue = "/assets/dengue.mp4"
+video_ciclo = "/assets/ciclo.mp4"
+video_atividade = "/assets/atividade.mp4"
+video_locais = "/assets/locais.mp4"
+video_prevencao = "/assets/prevencao.mp4"
+video_sintomas = "/assets/sintomas.mp4"
+
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 
 app.layout = dbc.Container(
     [
         dcc.Store(id="store"),
-        html.H1(children='Monitora Dengue Guararema'),
-        html.Hr(),
-        html.H2(children='Informações sobre casos de Dengue em Guararema'),
-        html.Hr(),
+        html.Br(),
+        dbc.Card(
+            dbc.CardBody(
+                [
+                html.H1(children='Monitora Dengue Guararema'),
+                html.Br(),
+                html.H2(children='Informações sobre casos de Dengue em Guararema'),
+                ]
+            )
+        ),
+        html.Br(),
+        dbc.Card(
                dbc.Tabs(
             [
-                dbc.Tab(label="Dengue e Temperatura", tab_id="d_vs_t"),
+                dbc.Tab(label="Dengue e Temperatura", tab_id="d_vs_t", active_tab_class_name="active"),
                 dbc.Tab(label="Dengue e Umidade", tab_id="d_vs_u"),
                 dbc.Tab(label="Mapa de casos", tab_id="mapa")
             ],
             id="tabs",
             active_tab="casos",
+                ),
         ),
+        
         html.Div(id="tab-content", className="p-4"),
+        
+        html.Div(
+            [
+                dbc.Row(
+                [
+                    dbc.Col(
+                        dbc.Card(
+                            dbc.CardBody(
+                                [
+                                html.H2(children='Dengue e Origem', className="card-title"),
+                                html.Br(),
+                                html.Video(
+                                    controls = False,
+                                    id = 'movie_player',
+                                    src = video_dengue,
+                                    autoPlay=True,
+                                    muted=True,
+                                    loop=True,
+                                    width=560, height=315
+                                )
+                                ]
+                            ),
+                            style={"width": "37rem"},
+                        ),
+                    ),
+                    dbc.Col(
+                        dbc.Card(
+                            dbc.CardBody(
+                                [
+                                html.H2(children='Ciclo de Vida do Mosquito', className="card-title"),
+                                html.Br(),
+                                html.Video(
+                                    controls = False,
+                                    id = 'movie_player',
+                                    src = video_ciclo,
+                                    autoPlay=True,
+                                    muted=True,
+                                    loop=True,
+                                    width=560, height=315
+                                )
+                                ]
+                            ),
+                            style={"width": "37rem"},
+                        ),
+                    ),
+                ]
+                ),
+                html.Br(),
+                dbc.Row(
+                [
+                    dbc.Col(
+                        dbc.Card(
+                            dbc.CardBody(
+                                [
+                                html.H2(children='Atividades do Mosquito', className="card-title"),
+                                html.Br(),
+                                html.Video(
+                                    controls = False,
+                                    id = 'movie_player',
+                                    src = video_atividade,
+                                    autoPlay=True,
+                                    muted=True,
+                                    loop=True,
+                                    width=560, height=315
+                                )
+                                ]
+                            ),
+                            style={"width": "37rem"},
+                        ),
+                    ),
+                    dbc.Col(
+                        dbc.Card(
+                            dbc.CardBody(
+                                [
+                                html.H2(children='Locais de proliferação', className="card-title"),
+                                html.Br(),
+                                html.Video(
+                                    controls = False,
+                                    id = 'movie_player',
+                                    src = video_locais,
+                                    autoPlay=True,
+                                    muted=True,
+                                    loop=True,
+                                    width=560, height=315
+                                )
+                                ]
+                            ),
+                            style={"width": "37rem"},
+                        ),
+                   
+                    ),
+                ]
+                ),
+                html.Br(),
+                dbc.Row(
+                [
+                    dbc.Col(
+                        dbc.Card(
+                            dbc.CardBody(
+                                [
+                                html.H2(children='Formas de Prevenção', className="card-title"),
+                                html.Br(),
+                                html.Video(
+                                    controls = False,
+                                    id = 'movie_player',
+                                    src = video_prevencao,
+                                    autoPlay=True,
+                                    muted=True,
+                                    loop=True,
+                                    width=560, height=315
+                                )
+                                ]
+                            ),
+                            style={"width": "37rem"},
+                        ),
+                    ),
+                    dbc.Col(
+                        dbc.Card(
+                            dbc.CardBody(
+                                [
+                                html.H2(children='Sintomas da Dengue e Orientações', className="card-title"),
+                                html.Br(),
+                                html.Video(
+                                    controls = False,
+                                    id = 'movie_player',
+                                    src = video_sintomas,
+                                    autoPlay=True,
+                                    muted=True,
+                                    loop=True,
+                                    width=560, height=315
+                                )
+                                ]
+                            ),
+                            style={"width": "37rem"},
+                        ),
+                    ),
+                ]
+                ),
+            ],
+        ),
+        html.Br()   
     ]
 )
+              
 
 @app.callback(
     Output("tab-content", "children"),
@@ -129,11 +290,11 @@ def render_tab_content(active_tab, data):
 
     # Definindo abas ativas
     if active_tab == "d_vs_t":
-        return dcc.Graph(figure=fig_dvst)
+        return dbc.Card(dcc.Graph(figure=fig_dvst))
     elif active_tab == "d_vs_u":
-        return dcc.Graph(figure= fig_dvsu)
+        return dbc.Card(dcc.Graph(figure= fig_dvsu))
     elif active_tab == "mapa":
-        return dcc.Graph(figure=fig_map)
+        return dbc.Card(dcc.Graph(figure=fig_map))
     
     
 if __name__ == '__main__':
