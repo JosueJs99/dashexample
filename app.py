@@ -107,6 +107,8 @@ video_locais = "/assets/locais.mp4"
 video_prevencao = "/assets/prevencao.mp4"
 video_sintomas = "/assets/sintomas.mp4"
 
+info1 = html.P(children='Fonte: http://educapes.capes.gov.br/handle/capes/585169', className="card-title")
+
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 
@@ -149,14 +151,15 @@ app.layout = dbc.Container(
                                 html.H2(children='Dengue e Origem', className="card-title"),
                                 html.Br(),
                                 html.Video(
-                                    controls = False,
-                                    id = 'movie_player',
+                                    controls = True,
+                                    id = 'movie_player_1',
                                     src = video_dengue,
                                     autoPlay=True,
                                     muted=True,
                                     loop=True,
-                                    width=560, height=315
-                                )
+                                    width=560, height=315,
+                                ),
+                                html.P(children='Fonte: http://educapes.capes.gov.br/handle/capes/585169', className="card-title")
                                 ]
                             ),
                             style={"width": "37rem"},
@@ -169,14 +172,15 @@ app.layout = dbc.Container(
                                 html.H2(children='Ciclo de Vida do Mosquito', className="card-title"),
                                 html.Br(),
                                 html.Video(
-                                    controls = False,
-                                    id = 'movie_player',
+                                    controls = True,
+                                    id = 'movie_player_2',
                                     src = video_ciclo,
                                     autoPlay=True,
                                     muted=True,
                                     loop=True,
                                     width=560, height=315
-                                )
+                                ),
+                                html.P(children='Fonte: http://educapes.capes.gov.br/handle/capes/585169', className="card-title")
                                 ]
                             ),
                             style={"width": "37rem"},
@@ -194,14 +198,15 @@ app.layout = dbc.Container(
                                 html.H2(children='Atividades do Mosquito', className="card-title"),
                                 html.Br(),
                                 html.Video(
-                                    controls = False,
-                                    id = 'movie_player',
+                                    controls = True,
+                                    id = 'movie_player_3',
                                     src = video_atividade,
                                     autoPlay=True,
                                     muted=True,
                                     loop=True,
                                     width=560, height=315
-                                )
+                                ),
+                                html.P(children='Fonte: http://educapes.capes.gov.br/handle/capes/585169', className="card-title")
                                 ]
                             ),
                             style={"width": "37rem"},
@@ -214,14 +219,15 @@ app.layout = dbc.Container(
                                 html.H2(children='Locais de proliferação', className="card-title"),
                                 html.Br(),
                                 html.Video(
-                                    controls = False,
-                                    id = 'movie_player',
+                                    controls = True,
+                                    id = 'movie_player_4',
                                     src = video_locais,
                                     autoPlay=True,
                                     muted=True,
                                     loop=True,
                                     width=560, height=315
-                                )
+                                ),
+                                html.P(children='Fonte: http://educapes.capes.gov.br/handle/capes/585169', className="card-title")
                                 ]
                             ),
                             style={"width": "37rem"},
@@ -240,14 +246,15 @@ app.layout = dbc.Container(
                                 html.H2(children='Formas de Prevenção', className="card-title"),
                                 html.Br(),
                                 html.Video(
-                                    controls = False,
-                                    id = 'movie_player',
+                                    controls = True,
+                                    id = 'movie_player_5',
                                     src = video_prevencao,
                                     autoPlay=True,
                                     muted=True,
                                     loop=True,
                                     width=560, height=315
-                                )
+                                ),
+                                html.P(children='Fonte: http://educapes.capes.gov.br/handle/capes/585169', className="card-title")
                                 ]
                             ),
                             style={"width": "37rem"},
@@ -260,14 +267,15 @@ app.layout = dbc.Container(
                                 html.H2(children='Sintomas da Dengue e Orientações', className="card-title"),
                                 html.Br(),
                                 html.Video(
-                                    controls = False,
-                                    id = 'movie_player',
+                                    controls = True,
+                                    id = 'movie_player_6',
                                     src = video_sintomas,
                                     autoPlay=True,
                                     muted=True,
                                     loop=True,
                                     width=560, height=315
-                                )
+                                ),
+                                html.P(children='Fonte: http://educapes.capes.gov.br/handle/capes/585169', className="card-title")
                                 ]
                             ),
                             style={"width": "37rem"},
